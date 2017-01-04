@@ -6,16 +6,6 @@ var Model = [
   location: {lat: 10.524327, lng: 76.214459},
   pincode: 680001
 },{
-  name: 'Athirappilly Water Falls',
-  address: 'Pariyaram, Thrissur',
-  location: {lat: 10.285107,lng: 76.569764},
-  pincode: 680724
-},{
-  name: 'Guruvayur Temple',
-  address: 'East Nada, Guruvayur',
-  location: {lat: 10.594552, lng: 76.039359},
-  pincode: 680101
-},{
   name: 'Sakthan Thampuran Palace',
   address: 'Stadium Rd, Chembukkav, Thrissur',
   location: {lat: 10.531252, lng: 76.21587},
@@ -24,11 +14,6 @@ var Model = [
   name: 'Bible Tower',
   address: 'Erinjeri Angadi, Latin Church Rd, Erinjeri, Thrissur',
   location: {lat: 10.521002, lng: 76.21855},
-  pincode: 680001
-},{
-  name: ' Paramekkavu Temple',
-  address: 'Round East, Keerankulangara, Thrissur ',
-  location: {lat: 11.934935, lng: 79.8286153},
   pincode: 680001
 },{
   name: 'Thrissur Railway Station',
@@ -51,9 +36,11 @@ var map;
        //creating a new map JS object.
       map = new google.maps.Map(document.getElementById('map'),  {
       center: {lat: 10.527642 , lng: 76.214435},
-      zoom : 13
+      zoom : 13,
+
 
       });
+       ko.applyBindings(new ViewModel());
 
      }
 
@@ -62,6 +49,9 @@ var map;
      //view model
      var ViewModel = function() {
          var largeInfowindow = new google.maps.InfoWindow();
+         var bounds = new google.maps.LatLngBounds();
+         var defaultIcon = makeMarkerIcon('0091ff');
+         var highlightedIcon = makeMarkerIcon('FFFF24');
          for (i = 0; i < Model.length; i++) {
 
             var position = Model[i].location;
@@ -79,7 +69,16 @@ var map;
             populateInfoWindow(this, largeInfowindow);
 
         });
+            marker.addListener('mouseover', function() {
+            this.setIcon(highlightedIcon);
+          });
+          marker.addListener('mouseout', function() {
+            this.setIcon(defaultIcon);
+          });
+
+            bounds.extend(markers[i].position);
         }
+         map.fitBounds(bounds);
 
         function populateInfoWindow(marker, infowindow) {
           if (infowindow.marker != marker) {
@@ -90,8 +89,55 @@ var map;
           infowindow.addListener('closeclick',function(){
             infowindow.setMarker(null);
           });
+
+           var streetViewService = new google.maps.StreetViewService();
+          var radius = 50;
+          // In case the status is OK, which means the pano was found, compute the
+          // position of the streetview image, then calculate the heading, then get a
+          // panorama from that and set the options
+          function getStreetView(data, status) {
+            if (status == google.maps.StreetViewStatus.OK) {
+              var nearStreetViewLocation = data.location.latLng;
+              var heading = google.maps.geometry.spherical.computeHeading(
+                nearStreetViewLocation, marker.position);
+                infowindow.setContent('<div>' + marker.title + '</div><div id="pano"></div>');
+                var panoramaOptions = {
+                  position: nearStreetViewLocation,
+                  pov: {
+                    heading: heading,
+                    pitch: 30
+                  }
+                };
+              var panorama = new google.maps.StreetViewPanorama(
+                document.getElementById('pano'), panoramaOptions);
+            } else {
+              infowindow.setContent('<div>' + marker.title + '</div>' +
+                '<div>No Street View Found</div>');
+            }
+          }
+          // Use streetview service to get the closest streetview image within
+          // 50 meters of the markers position
+          streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
+          // Open the infowindow on the correct marker.
+          infowindow.open(map, marker);
         }
       }
+
+
+
+
+
+          function makeMarkerIcon(markerColor) {
+        var markerImage = new google.maps.MarkerImage(
+          'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ markerColor +
+          '|40|_|%E2%80%A2',
+          new google.maps.Size(21, 34),
+          new google.maps.Point(0, 0),
+          new google.maps.Point(10, 34),
+          new google.maps.Size(21,34));
+        return markerImage;
+      };
+
 
 
 
