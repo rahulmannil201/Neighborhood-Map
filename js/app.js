@@ -48,6 +48,24 @@ var map;
 
      //view model
      var ViewModel = function() {
+
+        var self = this;
+        self.filter = ko.observable('');
+        self.locationitems = ko.observableArray(Model);
+        self.search = ko.computed(function() {
+      var filter = self.filter().toLowerCase();
+        if (!filter) {
+       return self.locationitems();
+       } else {
+       return ko.utils.arrayFilter(self.locationitems(), function(id) {
+        return stringStartsWith(id.name.toLowerCase(), filter);
+      });
+    }
+     });
+
+
+
+
          var largeInfowindow = new google.maps.InfoWindow();
          var bounds = new google.maps.LatLngBounds();
          var defaultIcon = makeMarkerIcon('0091ff');
@@ -143,3 +161,4 @@ var map;
 
 
      };
+
