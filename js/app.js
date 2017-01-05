@@ -58,10 +58,15 @@ var map;
        return self.locationitems();
        } else {
        return ko.utils.arrayFilter(self.locationitems(), function(id) {
-        return stringStartsWith(id.name.toLowerCase(), filter);
+        //return stringStartsWith(id.name.toLowerCase(), filter);
+
+        var place = item.name().toLowerCase().indexOf(filter)!==-1;
+                        item.markers.setVisible(name);
+
+                return name;
       });
     }
-     });
+     },self);
 
 
 
