@@ -61,11 +61,20 @@ var map;
         //return stringStartsWith(id.name.toLowerCase(), filter);
 
         var place = item.name.toLowerCase().indexOf(filter)!==-1;
-                        item.markers.setVisible(name);
 
-                return name;
+         if (place) {
+                if (item.marker) {
+                    item.marker.setVisible(place); // toggle visibility of the marker
+                }
+            }
+                       // place.markers.setVisible(name);
+
+                return place;
       });
     }
+    self.showInfoWindow = function(place) {
+       google.maps.event.trigger(place.marker, 'click');
+  };
      },self);
 
 
