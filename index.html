@@ -12,7 +12,7 @@
        <div class="menu">
                 <div class="list">Thrissur:places of interest </div>
 
-                    <input type="search" placeholder="Ex:bible tower" data-bind="textInput: filter">
+                    <input type="search" placeholder="Ex:bible tower" data-bind="value: filter,valueUpdate: 'keyup'">
 
                 <ul class="filterlist" data-bind="foreach: search">
                     <li class="listview" data-bind="text: name, click: $parent.showInfoWindow"></li>
