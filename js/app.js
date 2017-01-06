@@ -72,10 +72,18 @@ var map;
                 return place;
       });
     }
-    self.showInfoWindow = function(place) {
-       google.maps.event.trigger(place.marker, 'click');
-  };
+
      },self);
+
+        self.searchplaces = ko.observableArray();
+
+        self.locationitems().forEach(function(place) {
+    self.searchplaces.push(place);
+  });
+
+        self.clickonsearchplaces = function(place) {
+       google.maps.event.trigger(place.marker(), 'click');
+  };
 
 
 
