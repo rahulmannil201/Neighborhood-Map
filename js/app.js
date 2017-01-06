@@ -96,6 +96,7 @@ var map;
 
             var position = Model[i].location;
             var title = Model[i].name;
+            Model[i].marker = marker
             var marker = new google.maps.Marker ({
                 map: map,
                 position: position,
