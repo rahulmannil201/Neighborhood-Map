@@ -82,7 +82,7 @@ var map;
   });
 
         self.clickonsearchplaces = function(place) {
-       google.maps.event.trigger(place.marker(), 'click');
+       google.maps.event.trigger(place.marker, 'click');
   };
 
 
