@@ -66,6 +66,7 @@ var map;
                 if (item.marker) {
                     item.marker.setVisible(place); // toggle visibility of the marker
                 }
+
             }
                        // place.markers.setVisible(name);
 
@@ -96,14 +97,16 @@ var map;
 
             var position = Model[i].location;
             var title = Model[i].name;
-            Model[i].marker = marker
+            Model[i].marker = marker;
             var marker = new google.maps.Marker ({
                 map: map,
                 position: position,
                 title: title,
                 animation: google.maps.Animation.DROP,
                 id: i
+
    });
+            Model[i].marker = marker;
             markers.push(marker);
             marker.addListener('click', function() {
 
@@ -128,7 +131,7 @@ var map;
           infowindow.open(map, marker);
           // Make sure the marker property is cleared if the infowindow is closed.
           infowindow.addListener('closeclick',function(){
-            infowindow.setMarker(null);
+            infowindow.Marker(null);
           });
 
            var streetViewService = new google.maps.StreetViewService();
