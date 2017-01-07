@@ -56,18 +56,21 @@ var map;
       var filter = self.filter().toLowerCase();
         if (!filter) {
        return self.locationitems();
+       marker.setVisible(true);
        } else {
        return ko.utils.arrayFilter(self.locationitems(), function(item) {
         //return stringStartsWith(id.name.toLowerCase(), filter);
 
         var place = item.name.toLowerCase().indexOf(filter)!==-1;
 
-         if (place) {
-                if (item.marker) {
-                    item.marker.setVisible(place); // toggle visibility of the marker
-                }
+        // if (place) {
+               // if (item.marker) {
 
-            }
+                   item.marker.setVisible(place); // toggle visibility of the marker
+               // }
+
+
+          //  }
                        // place.markers.setVisible(name);
 
                 return place;
