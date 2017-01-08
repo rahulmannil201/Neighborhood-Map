@@ -1,4 +1,5 @@
-//model
+//*****Model******
+//list of locations
 var Model = [
 {
   name: 'Vadakkumnathan Shiva Temple',
@@ -27,7 +28,7 @@ var Model = [
   zipcode: 680021
 }];
 
-
+//creates a new map
 var map;
 
 
@@ -40,13 +41,16 @@ var map;
 
 
       });
+
+      //activating knockoutjs by binding viewmodel
        ko.applyBindings(new ViewModel());
 
      }
 
+     //create markers array
      var markers = [];
 
-     //view model
+     //*****View Model******
      var ViewModel = function() {
 
         var self = this;
@@ -55,8 +59,19 @@ var map;
         self.search = ko.computed(function() {
       var filter = self.filter().toLowerCase();
         if (!filter) {
-       return self.locationitems();
-       marker.setVisible(true);
+            return self.locationitems()
+
+            self.locationitems().forEach(function(place) {
+    self.place.marker.setVisible(true);
+   // marker.setVisible(true);
+  });
+
+    //return self.locationitems()
+    marker.setVisible(true);
+
+
+      // return self.locationitems();
+
        } else {
        return ko.utils.arrayFilter(self.locationitems(), function(item) {
         //return stringStartsWith(id.name.toLowerCase(), filter);
@@ -64,10 +79,10 @@ var map;
         var place = item.name.toLowerCase().indexOf(filter)!==-1;
 
         // if (place) {
-               // if (item.marker) {
+                if (item.marker) {
 
                    item.marker.setVisible(place); // toggle visibility of the marker
-               // }
+                }
 
 
           //  }
@@ -83,6 +98,7 @@ var map;
 
         self.locationitems().forEach(function(place) {
     self.searchplaces.push(place);
+   // marker.setVisible(true);
   });
 
         self.clickonsearchplaces = function(place) {
@@ -169,9 +185,6 @@ var map;
           infowindow.open(map, marker);
         }
       }
-
-
-
 
 
           function makeMarkerIcon(markerColor) {
