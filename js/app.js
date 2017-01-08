@@ -2,27 +2,27 @@
 //list of locations
 var Model = [
 {
-  name: 'Vadakkumnathan Shiva Temple',
+  name: 'VadakkumnathanShivaTemple',
   address: 'Thekkinkadu Maidan,Thrissur',
   location: {lat: 10.524327, lng: 76.214459},
   pincode: 680001
 },{
-  name: 'Sakthan Thampuran Palace',
+  name: 'SakthanThampuranPalace',
   address: 'Stadium Rd, Chembukkav, Thrissur',
   location: {lat: 10.531252, lng: 76.21587},
   pincode: 680020
 },{
-  name: 'Bible Tower',
+  name: 'BibleTower',
   address: 'Erinjeri Angadi, Latin Church Rd, Erinjeri, Thrissur',
   location: {lat: 10.521002, lng: 76.21855},
   pincode: 680001
 },{
-  name: 'Thrissur Railway Station',
+  name: 'ThrissurRailwayStation',
   address: 'Thrisur, R.S Road, Veliyannur, Thrissur',
   location: {lat: 10.514077, lng: 76.207648},
   zipcode: 680021
 },{
-  name: 'Sakthan private bus stand',
+  name: 'SakthanPrivateBusStand',
   address: 'Kokkala,Thrissur',
   location: {lat: 10.514818, lng: 76.214957},
   zipcode: 680021
