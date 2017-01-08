@@ -59,15 +59,18 @@ var map;
         self.search = ko.computed(function() {
       var filter = self.filter().toLowerCase();
         if (!filter) {
+            self.locationitems().forEach(function(place) {
+    place.marker.setVisible(true);
             return self.locationitems()
 
-            self.locationitems().forEach(function(place) {
-    self.place.marker.setVisible(true);
+           // self.locationitems().forEach(function(item) {
+   // place.marker.setVisible(true);
    // marker.setVisible(true);
   });
 
+
     //return self.locationitems()
-    marker.setVisible(true);
+
 
 
       // return self.locationitems();
@@ -80,6 +83,7 @@ var map;
 
         // if (place) {
                 if (item.marker) {
+
 
                    item.marker.setVisible(place); // toggle visibility of the marker
                 }
@@ -150,7 +154,7 @@ var map;
           infowindow.open(map, marker);
           // Make sure the marker property is cleared if the infowindow is closed.
           infowindow.addListener('closeclick',function(){
-            infowindow.Marker(null);
+            infowindow.marker = null;
           });
 
            var streetViewService = new google.maps.StreetViewService();
