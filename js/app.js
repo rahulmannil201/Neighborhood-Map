@@ -58,15 +58,23 @@ var map;
         self.locationitems = ko.observableArray(Model);
         self.search = ko.computed(function() {
       var filter = self.filter().toLowerCase();
+       self.locationitems().forEach(function(item) {
+            if (item.marker) {
+                item.marker.setVisible(true);
+
+            }
+        });
+
+
         if (!filter) {
-            self.locationitems().forEach(function(place) {
-    place.marker.setVisible(true);
+         //   self.locationitems().forEach(function(place) {
+  //  place.marker.setVisible(true);
             return self.locationitems()
 
            // self.locationitems().forEach(function(item) {
    // place.marker.setVisible(true);
    // marker.setVisible(true);
-  });
+ // });
 
 
     //return self.locationitems()
@@ -120,7 +128,7 @@ var map;
 
             var position = Model[i].location;
             var title = Model[i].name;
-            Model[i].marker = marker;
+            //Model[i].marker = marker;
             var marker = new google.maps.Marker ({
                 map: map,
                 position: position,
