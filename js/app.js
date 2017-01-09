@@ -47,6 +47,11 @@ var map;
 
      }
 
+
+     function googleError() {
+    alert("Google map is not responding. pls Check your connection or come back later.");
+}
+
      //create markers array
      var markers = [];
 
@@ -61,6 +66,7 @@ var map;
        self.locationitems().forEach(function(item) {
             if (item.marker) {
                 item.marker.setVisible(true);
+
 
             }
         });
@@ -114,8 +120,14 @@ var map;
   });
 
         self.clickonsearchplaces = function(place) {
+
        google.maps.event.trigger(place.marker, 'click');
+
+
+
   };
+
+
 
 
 
@@ -142,6 +154,8 @@ var map;
             marker.addListener('click', function() {
 
             populateInfoWindow(this, largeInfowindow);
+
+
 
         });
             marker.addListener('mouseover', function() {
@@ -180,7 +194,7 @@ var map;
                   position: nearStreetViewLocation,
                   pov: {
                     heading: heading,
-                    pitch: 30
+                    pitch: 20
                   }
                 };
               var panorama = new google.maps.StreetViewPanorama(
@@ -192,11 +206,50 @@ var map;
           }
           // Use streetview service to get the closest streetview image within
           // 50 meters of the markers position
-          streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
+
+
+          var wikiURL = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&format=json&callback=wikiCallback';
+        // var wikiTimeoutRequest = setTimeout(function() {
+        // alert("failed to load wikipedia resources");
+        // }, 8000);
+        $.ajax({
+            url: wikiURL,
+            dataType: "jsonp"
+            }).done(function(response) {
+                var articleStr = response[1];
+                var URL = 'http://en.wikipedia.org/wiki/' + articleStr;
+                // Use streetview service to get the closest streetview image within
+                // 50 meters of the markers position
+              //  streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
+                infowindow.setContent('<div>' + marker.name + '</div><br><a href ="' + marker.URL + '">' + URL + '</a><hr><div id="pano"></div>');
+                // Open the infowindow on the correct marker.
+                infowindow.open(map, marker);
+                console.log(URL);
+                // clearTimeout(wikiTimeoutRequest);
+
+                // error handling for jsonp requests with fail method.
+            }).fail(function (jqXHR, textStatus) {
+                    alert("failed to load wikipedia resources");
+                    });
+
+
+            streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
           // Open the infowindow on the correct marker.
           infowindow.open(map, marker);
-        }
-      }
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
           function makeMarkerIcon(markerColor) {
@@ -209,6 +262,8 @@ var map;
           new google.maps.Size(21,34));
         return markerImage;
       };
+
+
 
 
 
