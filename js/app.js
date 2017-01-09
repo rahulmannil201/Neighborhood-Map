@@ -175,12 +175,19 @@ var map;
         // var wikiTimeoutRequest = setTimeout(function() {
         // alert("failed to load wikipedia resources");
         // }, 8000);
-        $.ajax({
+
+
+        function populateInfoWindow(marker, infowindow) {
+            var articleUrl;
+
+
+            $.ajax({
             url: wikiURL,
             dataType: "jsonp"
             }).done(function(response) {
-                var articleStr = response[1];
-                url = 'http://en.wikipedia.org/wiki/' + articleStr;
+                var articleStr = response[3][0];
+                articleUrl = 'http://en.wikipedia.org/wiki/' + articleStr;
+                streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
                 // Use streetview service to get the closest streetview image within
                 // 50 meters of the markers position
               // streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
@@ -194,9 +201,6 @@ var map;
             }).fail(function (jqXHR, textStatus) {
                     alert("failed to load wikipedia resources");
                     });
-
-        function populateInfoWindow(marker, infowindow) {
-            var url;
           if (infowindow.marker != marker) {
           infowindow.marker = marker;
           infowindow.setContent('<div>' + marker.title + '</div>');
@@ -217,7 +221,7 @@ var map;
               var heading = google.maps.geometry.spherical.computeHeading(
                 nearStreetViewLocation, marker.position);
                // infowindow.setContent('<div>' + marker.title + '</div><div id="pano"></div>');
-                infowindow.setContent('<div>' + marker.title + '</div><br><a href ="' + url + '">' + URL + '</a><hr><div id="pano"></div>');
+                infowindow.setContent('<div>' + marker.title + '</div><br><a href ="' + articleUrl + '">' + articleUrl + '</a><hr><div id="pano"></div>');
                 var panoramaOptions = {
                   position: nearStreetViewLocation,
                   pov: {
@@ -241,7 +245,7 @@ var map;
           // 50 meters of the markers position
           //infowindow actual code here
 
-streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
+
 
 
 
