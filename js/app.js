@@ -169,6 +169,32 @@ var map;
         }
          map.fitBounds(bounds);
 
+
+
+         var wikiURL = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&format=json&callback=wikiCallback';
+        // var wikiTimeoutRequest = setTimeout(function() {
+        // alert("failed to load wikipedia resources");
+        // }, 8000);
+        $.ajax({
+            url: wikiURL,
+            dataType: "jsonp"
+            }).done(function(response) {
+                var articleStr = response[1];
+                var URL = 'http://en.wikipedia.org/wiki/' + articleStr;
+                // Use streetview service to get the closest streetview image within
+                // 50 meters of the markers position
+              // streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
+              //  infowindow.setContent('<div>' + marker.title + '</div><br><a href ="' + marker.URL + '">' + URL + '</a><hr><div id="pano"></div>');
+                // Open the infowindow on the correct marker.
+               // infowindow.open(map, marker);
+               // console.log(URL);
+                // clearTimeout(wikiTimeoutRequest);
+
+                // error handling for jsonp requests with fail method.
+            }).fail(function (jqXHR, textStatus) {
+                    alert("failed to load wikipedia resources");
+                    });
+
         function populateInfoWindow(marker, infowindow) {
           if (infowindow.marker != marker) {
           infowindow.marker = marker;
@@ -202,44 +228,34 @@ var map;
             } else {
               infowindow.setContent('<div>' + marker.title + '</div>' +
                 '<div>No Street View Found</div>');
+
             }
+
+            infowindow.setContent('<div>' + marker.title + '</div><br><a href ="' + marker.URL + '">' + URL + '</a><hr><div id="pano"></div>');
+
+            infowindow.open(map, marker);
           }
           // Use streetview service to get the closest streetview image within
           // 50 meters of the markers position
           //infowindow actual code here
 
+streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
 
-          var wikiURL = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&format=json&callback=wikiCallback';
-        // var wikiTimeoutRequest = setTimeout(function() {
-        // alert("failed to load wikipedia resources");
-        // }, 8000);
-        $.ajax({
-            url: wikiURL,
-            dataType: "jsonp"
-            }).done(function(response) {
-                var articleStr = response[1];
-                var URL = 'http://en.wikipedia.org/wiki/' + articleStr;
-                // Use streetview service to get the closest streetview image within
-                // 50 meters of the markers position
-               streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
-                infowindow.setContent('<div>' + marker.title + '</div><br><a href ="' + marker.URL + '">' + URL + '</a><hr><div id="pano"></div>');
+
+
+               // infowindow.setContent('<div>' + marker.title + '</div><br><a href ="' + marker.URL + '">' + URL + '</a><hr><div id="pano"></div>');
                 // Open the infowindow on the correct marker.
-                infowindow.open(map, marker);
+
                 console.log(URL);
-                // clearTimeout(wikiTimeoutRequest);
-
-                // error handling for jsonp requests with fail method.
-            }).fail(function (jqXHR, textStatus) {
-                    alert("failed to load wikipedia resources");
-                    });
-
-
            // streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
           // Open the infowindow on the correct marker.
          // infowindow.open(map, marker);
 
-    }
-}
+     }
+ }
+
+
+
 
 
 
