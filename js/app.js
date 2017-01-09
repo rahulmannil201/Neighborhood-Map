@@ -206,6 +206,7 @@ var map;
           }
           // Use streetview service to get the closest streetview image within
           // 50 meters of the markers position
+          //infowindow actual code here
 
 
           var wikiURL = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&format=json&callback=wikiCallback';
@@ -221,7 +222,7 @@ var map;
                 // Use streetview service to get the closest streetview image within
                 // 50 meters of the markers position
               //  streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
-                infowindow.setContent('<div>' + marker.name + '</div><br><a href ="' + marker.URL + '">' + URL + '</a><hr><div id="pano"></div>');
+                infowindow.setContent('<div>' + marker.title + '</div><br><a href ="' + marker.URL + '">' + URL + '</a><hr><div id="pano"></div>');
                 // Open the infowindow on the correct marker.
                 infowindow.open(map, marker);
                 console.log(URL);
