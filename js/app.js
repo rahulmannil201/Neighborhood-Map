@@ -180,7 +180,7 @@ var map;
             dataType: "jsonp"
             }).done(function(response) {
                 var articleStr = response[1];
-                var URL = 'http://en.wikipedia.org/wiki/' + articleStr;
+                url = 'http://en.wikipedia.org/wiki/' + articleStr;
                 // Use streetview service to get the closest streetview image within
                 // 50 meters of the markers position
               // streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
@@ -196,6 +196,7 @@ var map;
                     });
 
         function populateInfoWindow(marker, infowindow) {
+            var url;
           if (infowindow.marker != marker) {
           infowindow.marker = marker;
           infowindow.setContent('<div>' + marker.title + '</div>');
@@ -215,7 +216,8 @@ var map;
               var nearStreetViewLocation = data.location.latLng;
               var heading = google.maps.geometry.spherical.computeHeading(
                 nearStreetViewLocation, marker.position);
-                infowindow.setContent('<div>' + marker.title + '</div><div id="pano"></div>');
+               // infowindow.setContent('<div>' + marker.title + '</div><div id="pano"></div>');
+                infowindow.setContent('<div>' + marker.title + '</div><br><a href ="' + url + '">' + URL + '</a><hr><div id="pano"></div>');
                 var panoramaOptions = {
                   position: nearStreetViewLocation,
                   pov: {
@@ -231,7 +233,7 @@ var map;
 
             }
 
-            infowindow.setContent('<div>' + marker.title + '</div><br><a href ="' + marker.URL + '">' + URL + '</a><hr><div id="pano"></div>');
+
 
             infowindow.open(map, marker);
           }
