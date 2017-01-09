@@ -221,7 +221,7 @@ var map;
                 var URL = 'http://en.wikipedia.org/wiki/' + articleStr;
                 // Use streetview service to get the closest streetview image within
                 // 50 meters of the markers position
-              //  streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
+               streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
                 infowindow.setContent('<div>' + marker.title + '</div><br><a href ="' + marker.URL + '">' + URL + '</a><hr><div id="pano"></div>');
                 // Open the infowindow on the correct marker.
                 infowindow.open(map, marker);
@@ -234,9 +234,9 @@ var map;
                     });
 
 
-            streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
+           // streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
           // Open the infowindow on the correct marker.
-          infowindow.open(map, marker);
+         // infowindow.open(map, marker);
 
     }
 }
