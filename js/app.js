@@ -98,7 +98,7 @@ var ViewModel = function() {
             //if there is no searching of locations return all places
 
 
-            return self.locationitems()
+            return self.locationitems();
 
 
 
@@ -292,7 +292,7 @@ var ViewModel = function() {
             new google.maps.Point(10, 34),
             new google.maps.Size(21, 34));
         return markerImage;
-    };
+    }
 
 
 
