@@ -211,7 +211,7 @@ var ViewModel = function() {
           //var articleurl for wkipedia link
         var articleUrl;
         //request for wiki api
-        var wikiURL = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&format=json&callback=wikiCallback';
+        var wikiURL = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&format=json&callback=wikiCallback';
         //timeout for wikipedia page if it takes more than 8 seconds
         var wikiTimeout = setTimeout(function () {
             alert("failed to load wikipedia page");
