@@ -171,7 +171,7 @@ var map;
 
 
 
-         var wikiURL = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&format=json&callback=wikiCallback';
+
         // var wikiTimeoutRequest = setTimeout(function() {
         // alert("failed to load wikipedia resources");
         // }, 8000);
@@ -179,14 +179,15 @@ var map;
 
         function populateInfoWindow(marker, infowindow) {
             var articleUrl;
+            var wikiURL = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&format=json&callback=wikiCallback';
 
 
             $.ajax({
             url: wikiURL,
             dataType: "jsonp"
             }).done(function(response) {
-                var articleStr = response[3][0];
-                articleUrl = 'http://en.wikipedia.org/wiki/' + articleStr;
+                articleUrl = response[3][0];
+               //articleUrl = 'http://en.wikipedia.org/wiki/' + articleUrl;
                 streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
                 // Use streetview service to get the closest streetview image within
                 // 50 meters of the markers position
@@ -233,7 +234,7 @@ var map;
                 document.getElementById('pano'), panoramaOptions);
             } else {
               infowindow.setContent('<div>' + marker.title + '</div>' +
-                '<div>No Street View Found</div>');
+                '<div>No Street View Found</div>'+'</div><br><a href ="' + articleUrl + '">' + articleUrl + '</a><hr><div id="pano"></div>');
 
             }
 
@@ -252,7 +253,7 @@ var map;
                // infowindow.setContent('<div>' + marker.title + '</div><br><a href ="' + marker.URL + '">' + URL + '</a><hr><div id="pano"></div>');
                 // Open the infowindow on the correct marker.
 
-                console.log(URL);
+                //console.log(URL);
            // streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
           // Open the infowindow on the correct marker.
          // infowindow.open(map, marker);
